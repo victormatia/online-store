@@ -38,7 +38,6 @@ export default class Home extends Component {
     this.setState({
       searchResult: await getProductsFromQuery(inputSearch),
       message: '',
-
     });
   }
 

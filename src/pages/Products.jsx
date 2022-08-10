@@ -57,6 +57,7 @@ export default class Products extends Component {
 
   handleChange = ({ target }) => {
     const { type, name, value, id } = target;
+
     if (type === 'email') {
       const emailRegex = /\S+@\S+\.\S+/;
       this.setState({
@@ -64,9 +65,11 @@ export default class Products extends Component {
         email: value,
         productId: id }, this.checkButton);
     }
+
     if (type === 'radio') {
       this.setState({ evaluation: id }, this.checkButton);
     }
+
     if (name === 'comments') {
       this.setState({ comments: value });
     }
