@@ -8,7 +8,8 @@ import {
   getProductsFromQuery,
   getProductsFromCategory,
 } from '../services/api';
-import { getProductToLocalStorage } from '../services/localStorage';
+import { getProductFromLS } from '../services/localStorage';
+import { updateCounter } from '../services/services';
 
 export default class Home extends Component {
   constructor() {
@@ -19,17 +20,13 @@ export default class Home extends Component {
       inputSearch: '',
       message: 'Digite algum termo de pesquisa ou escolha uma categoria.',
       currentCategory: '',
-      counter: JSON.parse(getProductToLocalStorage()).length,
+      count: JSON.parse(getProductFromLS()).length,
     };
   }
 
   componentDidMount = async () => {
     const categories = await getCategories();
     this.setState({ categories });
-  }
-
-  updateCounter = () => {
-    this.setState(({ counter }) => ({ counter: counter + 1 }));
   }
 
   handleChange = ({ target: { value, name } }) => {
@@ -41,7 +38,6 @@ export default class Home extends Component {
     this.setState({
       searchResult: await getProductsFromQuery(inputSearch),
       message: '',
-
     });
   }
 
@@ -56,10 +52,10 @@ export default class Home extends Component {
   }
 
   render() {
-    const { searchResult, categories, message, counter } = this.state;
+    const { searchResult, categories, message, count } = this.state;
     return (
       <div>
-        <Header counter={ counter } />
+        <Header count={ count } />
         { categories.map(({ name, id }) => (
           <NavCategories
             key={ id }
@@ -87,7 +83,11 @@ export default class Home extends Component {
           Pesquisar
         </button>
         { message ? <span data-testid="home-initial-message">{ message }</span> : (
-          <Content searchResult={ searchResult } updateCounter={ this.updateCounter } />
+          <Content
+            searchResult={ searchResult }
+            updateCounter={ updateCounter }
+            thisHome={ this }
+          />
         )}
       </div>
     );

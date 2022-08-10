@@ -13,6 +13,7 @@ export default class ItemCard extends Component {
       result,
       updateCounter,
       shipping,
+      thisHome,
     } = this.props;
     return (
       <div data-testid="product">
@@ -31,7 +32,7 @@ export default class ItemCard extends Component {
           type="button"
           onClick={ () => {
             onClick(result);
-            updateCounter();
+            updateCounter(thisHome);
           } }
           data-testid="product-add-to-cart"
         >
@@ -53,4 +54,5 @@ ItemCard.propTypes = {
   shipping: PropTypes.shape({
     free_shipping: PropTypes.bool.isRequired,
   }).isRequired,
+  thisHome: PropTypes.shape().isRequired,
 };

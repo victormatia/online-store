@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ItemCard from './ItemCard';
 import {
-  getProductToLocalStorage,
-  setProductToLocalStorage,
+  getProductFromLS,
+  setProductToLS,
 } from '../services/localStorage';
 
 export default class Content extends Component {
@@ -14,25 +14,18 @@ export default class Content extends Component {
     };
   }
 
-  componentDidMount = () => {
-    this.setState({
-      products: JSON.parse(getProductToLocalStorage()),
-    });
-  }
+  componentDidMount = () => this.setState({ products: JSON.parse(getProductFromLS()) });
 
-  handleClick = (result) => {
-    this.setState((prevState) => ({
-      products: [...prevState.products, result],
-    }));
-  }
+  handleClick = (param) => this.setState((pS) => ({ products: [...pS.products, param] }));
 
   componentDidUpdate = () => {
     const { products } = this.state;
-    setProductToLocalStorage(JSON.stringify(products));
+    setProductToLS(JSON.stringify(products));
   }
 
   render() {
-    const { searchResult: { results }, updateCounter } = this.props;
+    const { searchResult: { results }, updateCounter, thisHome } = this.props;
+
     return (
       <div>
         { results.length ? (
@@ -47,6 +40,7 @@ export default class Content extends Component {
               shipping={ result.shipping }
               onClick={ this.handleClick }
               updateCounter={ updateCounter }
+              thisHome={ thisHome }
             />
 
           ))
@@ -61,4 +55,5 @@ Content.propTypes = {
     results: PropTypes.arrayOf(PropTypes.object.isRequired),
   }).isRequired,
   updateCounter: PropTypes.func.isRequired,
+  thisHome: PropTypes.shape().isRequired,
 };

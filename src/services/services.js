@@ -1,15 +1,14 @@
-export default function filterProducts(param) {
-  const reduceCartProducts = param.reduce((acc, curr) => {
-    const hasRepeat = acc.includes(curr.title);
-    if (!hasRepeat) {
-      const getTitle = curr.title;
-      acc.push(getTitle);
+export function filterProducts(param) {
+  const filteredProducts = [];
+
+  param.reduce((acc, curr) => {
+    if (!acc.includes(curr.title)) {
+      acc.push(curr.title);
       return acc;
     } return acc;
-  }, []);
-  const filteredProducts = [];
-  reduceCartProducts.forEach((title) => {
+  }, []).forEach((title) => {
     filteredProducts.push(param.find((el) => el.title === title));
-  });
-  return filteredProducts;
+  }); return filteredProducts;
 }
+
+export const updateCounter = (param) => param.setState((pS) => ({ count: pS.count + 1 }));

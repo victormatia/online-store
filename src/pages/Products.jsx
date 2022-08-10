@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductFromId } from '../services/api';
 import {
-  getEvaluationToLocalStorage,
-  getProductToLocalStorage, setEvaluationToLocalStorage, setProductToLocalStorage,
+  getEvaluationFromLS,
+  getProductFromLS, setEvaluationToLS, setProductToLS,
 } from '../services/localStorage';
 import CartInfo from '../components/CartInfo';
+import { updateCounter } from '../services/services';
 
 export default class Products extends Component {
   constructor() {
@@ -20,15 +21,15 @@ export default class Products extends Component {
       evaluation: '',
       comments: '',
       errorMessage: '',
-      counter: JSON.parse(getProductToLocalStorage()).length,
+      count: JSON.parse(getProductFromLS()).length,
     };
   }
 
   componentDidMount = async () => {
     const { match: { params: { id } } } = this.props;
     const requestProduct = await getProductFromId(id);
-    const productsInCart = JSON.parse(getProductToLocalStorage());
-    const evaluationArr = await JSON.parse(getEvaluationToLocalStorage(id));
+    const productsInCart = JSON.parse(getProductFromLS());
+    const evaluationArr = await JSON.parse(getEvaluationFromLS(id));
     this.setState({
       requestProduct,
       productsInCart,
@@ -36,15 +37,11 @@ export default class Products extends Component {
     });
   }
 
-  updateCounter = () => {
-    this.setState(({ counter }) => ({ counter: counter + 1 }));
-  }
-
   handleClick = () => {
     const { requestProduct, productsInCart } = this.state;
     if (productsInCart) {
       productsInCart.push(requestProduct);
-      this.setState({ productsInCart }, setProductToLocalStorage(JSON
+      this.setState({ productsInCart }, setProductToLS(JSON
         .stringify(productsInCart)));
     }
   }
@@ -60,6 +57,7 @@ export default class Products extends Component {
 
   handleChange = ({ target }) => {
     const { type, name, value, id } = target;
+
     if (type === 'email') {
       const emailRegex = /\S+@\S+\.\S+/;
       this.setState({
@@ -67,9 +65,11 @@ export default class Products extends Component {
         email: value,
         productId: id }, this.checkButton);
     }
+
     if (type === 'radio') {
       this.setState({ evaluation: id }, this.checkButton);
     }
+
     if (name === 'comments') {
       this.setState({ comments: value });
     }
@@ -83,7 +83,7 @@ export default class Products extends Component {
     const { match: { params: { id } } } = this.props;
     const evaluationObj = { email, evaluation, comments, productId };
     evaluationArr.push(evaluationObj);
-    setEvaluationToLocalStorage(id, JSON.stringify(evaluationArr));
+    setEvaluationToLS(id, JSON.stringify(evaluationArr));
     this.setState({
       email: '',
       evaluation: '',
@@ -97,7 +97,7 @@ export default class Products extends Component {
       email,
       comments,
       errorMessage,
-      counter,
+      count,
     } = this.state;
     const { match: { params: { id } } } = this.props;
     let isShipping = false;
@@ -117,7 +117,7 @@ export default class Products extends Component {
         <p data-testid="product-detail-price">{`R$: ${price}`}</p>
 
         <div>
-          <CartInfo counter={ counter } />
+          <CartInfo count={ count } />
           <Link to="/cart" data-testid="shopping-cart-button">
             Carrinho
           </Link>
@@ -127,7 +127,7 @@ export default class Products extends Component {
           type="button"
           onClick={ () => {
             this.handleClick();
-            this.updateCounter();
+            updateCounter(this);
           } }
           data-testid="product-detail-add-to-cart"
         >

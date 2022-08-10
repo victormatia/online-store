@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getProductToLocalStorage } from '../services/localStorage';
-import filterProducts from '../services/services';
+import { getProductFromLS } from '../services/localStorage';
+import { filterProducts } from '../services/services';
 
 export default class Checkout extends Component {
   constructor() {
@@ -21,16 +21,15 @@ export default class Checkout extends Component {
   }
 
   componentDidMount = () => {
-    const cartProducts = JSON.parse(getProductToLocalStorage());
+    const cartProducts = JSON.parse(getProductFromLS());
     this.setState({ filteredProducts: filterProducts(cartProducts) });
   }
 
   checkMessageAndButtonDisable = () => {
     const { fullName, email, phoneNumber, cpf, cep, adress, paymentMethod } = this.state;
-    if (fullName.length && email.length
-        && phoneNumber.length && cpf.length
-        && cep.length && paymentMethod.length
-        && adress.length) {
+
+    if (fullName && email && phoneNumber && cpf
+        && cep && paymentMethod && adress) {
       this.setState({ errorMessage: '', isDisabled: false });
     } else this.setState({ errorMessage: 'Campos inválidos', isDisabled: true });
   }
