@@ -27,10 +27,9 @@ export default class Checkout extends Component {
 
   checkMessageAndButtonDisable = () => {
     const { fullName, email, phoneNumber, cpf, cep, adress, paymentMethod } = this.state;
-    if (fullName.length && email.length
-        && phoneNumber.length && cpf.length
-        && cep.length && paymentMethod.length
-        && adress.length) {
+
+    if (fullName && email && phoneNumber && cpf
+        && cep && paymentMethod && adress) {
       this.setState({ errorMessage: '', isDisabled: false });
     } else this.setState({ errorMessage: 'Campos inválidos', isDisabled: true });
   }
