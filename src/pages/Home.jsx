@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CartInfo from '../components/CartInfo';
 import Content from '../components/Content';
+import Header from '../components/Header';
 import NavCategories from '../components/NavCategories';
 import {
   getCategories,
@@ -55,6 +55,7 @@ export default class Home extends Component {
     const { searchResult, categories, message, count } = this.state;
     return (
       <div>
+        <Header counter={ counter } />
         { categories.map(({ name, id }) => (
           <NavCategories
             key={ id }
@@ -63,10 +64,7 @@ export default class Home extends Component {
             saveFilterCategory={ this.saveFilterCategory }
           />
         ))}
-        <div>
-          <CartInfo count={ count } />
-          <Link to="/cart" data-testid="shopping-cart-button">Carrinho</Link>
-        </div>
+        <Link to="/cart" data-testid="shopping-cart-button">Carrinho</Link>
         <label htmlFor="search">
           <input
             type="text"
@@ -100,4 +98,4 @@ export default class Home extends Component {
 // desculpa eu errei tmbm.
 // desculpa, fui garoto
 // desulpa nós erramos!!!
-// Ass: Victor Matias, Igor Oliveira, Fabio Natan, Rafael Souza, Lucas Rodrigues e Luis Laporta;
+// Ass: Victor Matias, Igor Oliveira, Fabio Natan, Rafael Souza, Lucas Rodrigues e Luis Laporta
