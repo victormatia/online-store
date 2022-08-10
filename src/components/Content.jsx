@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ItemCard from './ItemCard';
 import {
-  getProductToLocalStorage,
-  setProductToLocalStorage,
+  getProductFromLS,
+  setProductToLS,
 } from '../services/localStorage';
 
 export default class Content extends Component {
@@ -16,7 +16,7 @@ export default class Content extends Component {
 
   componentDidMount = () => {
     this.setState({
-      products: JSON.parse(getProductToLocalStorage()),
+      products: JSON.parse(getProductFromLS()),
     });
   }
 
@@ -28,7 +28,7 @@ export default class Content extends Component {
 
   componentDidUpdate = () => {
     const { products } = this.state;
-    setProductToLocalStorage(JSON.stringify(products));
+    setProductToLS(JSON.stringify(products));
   }
 
   render() {

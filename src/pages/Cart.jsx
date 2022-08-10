@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  getProductToLocalStorage,
-  setProductToLocalStorage,
+  getProductFromLS,
+  setProductToLS,
 } from '../services/localStorage';
 import { filterProducts } from '../services/services';
 
@@ -16,7 +16,7 @@ export default class Cart extends Component {
   }
 
   componentDidMount = () => {
-    const cartProducts = JSON.parse(getProductToLocalStorage());
+    const cartProducts = JSON.parse(getProductFromLS());
     this.setState({
       cartProducts,
       filteredProducts: filterProducts(cartProducts),
@@ -25,7 +25,7 @@ export default class Cart extends Component {
 
   componentDidUpdate = () => {
     const { cartProducts } = this.state;
-    setProductToLocalStorage(JSON.stringify(cartProducts));
+    setProductToLS(JSON.stringify(cartProducts));
   }
 
   returnQuantEqualCartProducts = (param) => {

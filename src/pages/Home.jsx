@@ -8,7 +8,7 @@ import {
   getProductsFromQuery,
   getProductsFromCategory,
 } from '../services/api';
-import { getProductToLocalStorage } from '../services/localStorage';
+import { getProductFromLS } from '../services/localStorage';
 import { updateCounter } from '../services/services';
 
 export default class Home extends Component {
@@ -20,7 +20,7 @@ export default class Home extends Component {
       inputSearch: '',
       message: 'Digite algum termo de pesquisa ou escolha uma categoria.',
       currentCategory: '',
-      count: JSON.parse(getProductToLocalStorage()).length,
+      count: JSON.parse(getProductFromLS()).length,
     };
   }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getProductToLocalStorage } from '../services/localStorage';
+import { getProductFromLS } from '../services/localStorage';
 import { filterProducts } from '../services/services';
 
 export default class Checkout extends Component {
@@ -21,7 +21,7 @@ export default class Checkout extends Component {
   }
 
   componentDidMount = () => {
-    const cartProducts = JSON.parse(getProductToLocalStorage());
+    const cartProducts = JSON.parse(getProductFromLS());
     this.setState({ filteredProducts: filterProducts(cartProducts) });
   }
 

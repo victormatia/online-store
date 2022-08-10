@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductFromId } from '../services/api';
 import {
-  getEvaluationToLocalStorage,
-  getProductToLocalStorage, setEvaluationToLocalStorage, setProductToLocalStorage,
+  getEvaluationFromLS,
+  getProductFromLS, setEvaluationToLS, setProductToLS,
 } from '../services/localStorage';
 import CartInfo from '../components/CartInfo';
 import { updateCounter } from '../services/services';
@@ -21,15 +21,15 @@ export default class Products extends Component {
       evaluation: '',
       comments: '',
       errorMessage: '',
-      count: JSON.parse(getProductToLocalStorage()).length,
+      count: JSON.parse(getProductFromLS()).length,
     };
   }
 
   componentDidMount = async () => {
     const { match: { params: { id } } } = this.props;
     const requestProduct = await getProductFromId(id);
-    const productsInCart = JSON.parse(getProductToLocalStorage());
-    const evaluationArr = await JSON.parse(getEvaluationToLocalStorage(id));
+    const productsInCart = JSON.parse(getProductFromLS());
+    const evaluationArr = await JSON.parse(getEvaluationFromLS(id));
     this.setState({
       requestProduct,
       productsInCart,
@@ -41,7 +41,7 @@ export default class Products extends Component {
     const { requestProduct, productsInCart } = this.state;
     if (productsInCart) {
       productsInCart.push(requestProduct);
-      this.setState({ productsInCart }, setProductToLocalStorage(JSON
+      this.setState({ productsInCart }, setProductToLS(JSON
         .stringify(productsInCart)));
     }
   }
@@ -80,7 +80,7 @@ export default class Products extends Component {
     const { match: { params: { id } } } = this.props;
     const evaluationObj = { email, evaluation, comments, productId };
     evaluationArr.push(evaluationObj);
-    setEvaluationToLocalStorage(id, JSON.stringify(evaluationArr));
+    setEvaluationToLS(id, JSON.stringify(evaluationArr));
     this.setState({
       email: '',
       evaluation: '',
