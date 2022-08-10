@@ -7,7 +7,7 @@ import CartInfo from './CartInfo';
 
 export default class Header extends Component {
   render() {
-    const { counter } = this.props;
+    const { count } = this.props;
 
     return (
       <header>
@@ -24,7 +24,7 @@ export default class Header extends Component {
         </nav>
         <Link className="cartIcon" to="/cart">
           <img src={ cartIcon1 } alt="Icone de carrinho" />
-          <CartInfo counter={ counter } />
+          <CartInfo count={ count } />
         </Link>
       </header>
     );
@@ -32,5 +32,5 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
-  counter: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
 };
