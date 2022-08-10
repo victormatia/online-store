@@ -28,17 +28,15 @@ export default class Cart extends Component {
     setProductToLS(JSON.stringify(cartProducts));
   }
 
-  returnQuantEqualCartProducts = (param) => {
+  quantityOfSameProds = (param) => {
     const { cartProducts } = this.state;
-    const quantity = cartProducts.filter((product) => (
-      product.id === param
-    ));
-    return quantity.length;
+    return cartProducts.filter(({ id }) => (id === param)).length;
   }
 
   handleQuantity = ({ target }) => {
-    const { cartProducts } = this.state;
     const { name, id } = target;
+    const { cartProducts } = this.state;
+
     if (name === 'remove') {
       const removeAllSimilarProducts = cartProducts
         .filter((product) => product.id !== id);
@@ -46,10 +44,13 @@ export default class Cart extends Component {
         cartProducts: removeAllSimilarProducts,
         filteredProducts: filterProducts(removeAllSimilarProducts) });
     }
+
     if (name === 'decrease') {
       cartProducts.splice(id, 1); // params: index que quer remover, e quantos quer remover
       this.setState({ cartProducts });
-    } if (name === 'increase') {
+    }
+
+    if (name === 'increase') {
       const productToAdd = cartProducts.find((el) => el.id === id);
       this.setState((prevState) => ({
         cartProducts: [...prevState.cartProducts, productToAdd],
@@ -84,7 +85,7 @@ export default class Cart extends Component {
                   data-testid="product-decrease-quantity"
                   onClick={ this.handleQuantity }
                   disabled={
-                    this.returnQuantEqualCartProducts(product.id)
+                    this.quantityOfSameProds(product.id)
                     === minQuantity
                   }
                 >
@@ -93,7 +94,7 @@ export default class Cart extends Component {
                 <p
                   data-testid="shopping-cart-product-quantity"
                 >
-                  { this.returnQuantEqualCartProducts(product.id) }
+                  { this.quantityOfSameProds(product.id) }
                 </p>
                 <button
                   type="button"
@@ -102,7 +103,7 @@ export default class Cart extends Component {
                   data-testid="product-increase-quantity"
                   onClick={ this.handleQuantity }
                   disabled={
-                    this.returnQuantEqualCartProducts(product.id)
+                    this.quantityOfSameProds(product.id)
                     === product.available_quantity
                   }
                 >
