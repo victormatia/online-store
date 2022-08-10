@@ -4,7 +4,7 @@ import {
   getProductToLocalStorage,
   setProductToLocalStorage,
 } from '../services/localStorage';
-import filterProducts from '../services/services';
+import { filterProducts } from '../services/services';
 
 export default class Cart extends Component {
   constructor() {

@@ -7,6 +7,7 @@ import {
   getProductToLocalStorage, setEvaluationToLocalStorage, setProductToLocalStorage,
 } from '../services/localStorage';
 import CartInfo from '../components/CartInfo';
+import { updateCounter } from '../services/services';
 
 export default class Products extends Component {
   constructor() {
@@ -20,7 +21,7 @@ export default class Products extends Component {
       evaluation: '',
       comments: '',
       errorMessage: '',
-      counter: JSON.parse(getProductToLocalStorage()).length,
+      count: JSON.parse(getProductToLocalStorage()).length,
     };
   }
 
@@ -34,10 +35,6 @@ export default class Products extends Component {
       productsInCart,
       evaluationArr,
     });
-  }
-
-  updateCounter = () => {
-    this.setState(({ counter }) => ({ counter: counter + 1 }));
   }
 
   handleClick = () => {
@@ -97,7 +94,7 @@ export default class Products extends Component {
       email,
       comments,
       errorMessage,
-      counter,
+      count,
     } = this.state;
     const { match: { params: { id } } } = this.props;
     let isShipping = false;
@@ -117,7 +114,7 @@ export default class Products extends Component {
         <p data-testid="product-detail-price">{`R$: ${price}`}</p>
 
         <div>
-          <CartInfo counter={ counter } />
+          <CartInfo count={ count } />
           <Link to="/cart" data-testid="shopping-cart-button">
             Carrinho
           </Link>
@@ -127,7 +124,7 @@ export default class Products extends Component {
           type="button"
           onClick={ () => {
             this.handleClick();
-            this.updateCounter();
+            updateCounter(this);
           } }
           data-testid="product-detail-add-to-cart"
         >

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductToLocalStorage } from '../services/localStorage';
-import filterProducts from '../services/services';
+import { filterProducts } from '../services/services';
 
 export default class Checkout extends Component {
   constructor() {

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 export default class CartInfo extends Component {
   render() {
-    const { counter } = this.props;
+    const { count } = this.props;
     return (
-      <span data-testid="shopping-cart-size">{counter}</span>
+      <span data-testid="shopping-cart-size">{count}</span>
     );
   }
 }
 
 CartInfo.propTypes = {
-  counter: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
 };

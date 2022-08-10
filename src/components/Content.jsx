@@ -32,7 +32,7 @@ export default class Content extends Component {
   }
 
   render() {
-    const { searchResult: { results }, updateCounter } = this.props;
+    const { searchResult: { results }, updateCounter, thisHome } = this.props;
     return (
       <div>
         { results.length ? (
@@ -47,6 +47,7 @@ export default class Content extends Component {
               shipping={ result.shipping }
               onClick={ this.handleClick }
               updateCounter={ updateCounter }
+              thisHome={ thisHome }
             />
 
           ))
@@ -61,4 +62,5 @@ Content.propTypes = {
     results: PropTypes.arrayOf(PropTypes.object.isRequired),
   }).isRequired,
   updateCounter: PropTypes.func.isRequired,
+  thisHome: PropTypes.shape().isRequired,
 };
