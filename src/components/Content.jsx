@@ -14,17 +14,9 @@ export default class Content extends Component {
     };
   }
 
-  componentDidMount = () => {
-    this.setState({
-      products: JSON.parse(getProductFromLS()),
-    });
-  }
+  componentDidMount = () => this.setState({ products: JSON.parse(getProductFromLS()) });
 
-  handleClick = (result) => {
-    this.setState((prevState) => ({
-      products: [...prevState.products, result],
-    }));
-  }
+  handleClick = (param) => this.setState((pS) => ({ products: [...pS.products, param] }));
 
   componentDidUpdate = () => {
     const { products } = this.state;
@@ -33,6 +25,7 @@ export default class Content extends Component {
 
   render() {
     const { searchResult: { results }, updateCounter, thisHome } = this.props;
+
     return (
       <div>
         { results.length ? (
