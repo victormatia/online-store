@@ -100,5 +100,4 @@ export default class Home extends Component {
 // desculpa eu errei tmbm.
 // desculpa, fui garoto
 // desulpa nós erramos!!!
-// Ass: Victor Matias, Igor Oliveira, Fabio Natan, Rafael Souza, Lucas Rodrigues e Luis Laporta;
-// deste
+// Ass: Victor Matias, Igor Oliveira, Fabio Natan, Rafael Souza, Lucas Rodrigues e Luis Laporta
