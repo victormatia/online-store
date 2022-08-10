@@ -55,7 +55,7 @@ export default class Home extends Component {
     const { searchResult, categories, message, count } = this.state;
     return (
       <div>
-        <Header counter={ counter } />
+        <Header count={ count } />
         { categories.map(({ name, id }) => (
           <NavCategories
             key={ id }
