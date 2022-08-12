@@ -1,4 +1,4 @@
-export const filterProducts = (param) => (param.reduce((acc, curr) => (
-  !acc.filter(({ id }) => id === curr.id).length ? [...acc, curr] : acc), []));
+export const filterProducts = (prod) => (prod.reduce((acc, curr) => (
+  !acc.find(({ id }) => id === curr.id) ? [...acc, curr] : acc), []));
 
 export const updateCounter = (param) => param.setState((pS) => ({ count: pS.count + 1 }));
