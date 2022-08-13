@@ -28,9 +28,9 @@ header h2 span {
 header nav {
   align-items: center;
   display: flex;
-  flex-basis: 20%;
   font-weight: 300;
   justify-content: space-between;
+  min-width: 400px;
 }
 
 header nav .link-nav {
